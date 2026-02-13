@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vastulink</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom, #b3ecff, #e6f7ff); /* pastel ocean tones */
+      overflow: hidden;
+      font-size: 2em; /* bigger font everywhere */
+    }
+
+    /* Ocean waves background effect */
+    .waves {
+      position: fixed;
+      width: 200%;
+      height: 100%;
+      top: 0;
+      left: -50%;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.3) 0px,
+        rgba(255,255,255,0.3) 20px,
+        transparent 20px,
+        transparent 40px
+      );
+      animation: waveMove 10s linear infinite;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    @keyframes waveMove {
+      from { transform: translateY(0); }
+      to { transform: translateY(40px); }
+    }
+
+    .question {
+      margin-top: 20vh;
+      font-size: 2.5em;
+      font-weight: bold;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      animation-delay: 1s;
+      animation-fill-mode: forwards; /* stays visible */
+    }
+
+    .btn {
+      padding: 20px 40px;
+      margin: 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.5em;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      animation-delay: 2.5s;
+    }
+
+    .yes {
+      background-color: #a3e4d7; /* pastel teal */
+    }
+
+    .no {
+      background-color: #f5b7b1; /* pastel coral */
+      position: absolute;
+    }
+
+    .reaction {
+      font-size: 2em;
+      margin-top: 30px;
+      color: #ff6699;
+      display: none;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      font-size: 1.2em;
+      color: #333;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      animation-delay: 3.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Confetti styling */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 30px;
+      background-color: red;
+      animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="waves"></div>
+  <div class="question">Sagar, will you be my Valentine?</div>
+  <button class="btn yes" onclick="showReaction()">Yes 💖</button>
+  <button class="btn no" id="noBtn">No 🙈</button>
+  <div class="reaction" id="reaction">Yay! You said Yes! 💕✨</div>
+  <div class="footer">I choose not to trek mountains, but to walk the journey of life—with you</div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.floor(Math.random() * (window.innerWidth - 150));
+      const y = Math.floor(Math.random() * (window.innerHeight - 100));
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    });
+
+    function showReaction() {
+      document.getElementById('reaction').style.display = 'block';
+      launchConfetti();
+    }
+
+    function launchConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.top = '-10px';
+        confetti.style.backgroundColor = randomColor();
+        confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+
+    function randomColor() {
+      const colors = ['#ff6699', '#ffcc00', '#66ff66', '#66ccff', '#ff9966', '#cc66ff'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  </script>
+</body>
+</html>
